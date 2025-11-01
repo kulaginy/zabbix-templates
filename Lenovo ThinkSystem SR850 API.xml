@@ -24,13 +24,14 @@
                     <type>HTTP_AGENT</type>
                     <key>redfish.chassis.inventoryraw</key>
                     <delay>5m</delay>
+                    <history>3d</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <authtype>BASIC</authtype>
                     <username>{$API_USER}</username>
                     <password>{$API_PASSWORD}</password>
                     <timeout>30s</timeout>
-                    <url>https://{HOST.IP}/redfish/v1/Systems/1/Memory</url>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1/Memory</url>
                     <headers>
                         <header>
                             <name>Accept</name>
@@ -647,7 +648,7 @@
                     <tags>
                         <tag>
                             <tag>cpu</tag>
-                            <value>statushealth</value>
+                            <value>statusstate</value>
                         </tag>
                     </tags>
                 </item>
@@ -657,13 +658,14 @@
                     <type>HTTP_AGENT</type>
                     <key>redfish.memory.collection.raw</key>
                     <delay>5m</delay>
+                    <history>3d</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <authtype>BASIC</authtype>
                     <username>{$API_USER}</username>
                     <password>{$API_PASSWORD}</password>
                     <timeout>30s</timeout>
-                    <url>https://{HOST.IP}/redfish/v1/Systems/1/Memory</url>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1/Memory</url>
                     <headers>
                         <header>
                             <name>Accept</name>
@@ -678,13 +680,14 @@
                     <type>HTTP_AGENT</type>
                     <key>redfish.network.inventoryraw</key>
                     <delay>5m</delay>
+                    <history>3d</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <authtype>BASIC</authtype>
                     <username>{$API_USER}</username>
                     <password>{$API_PASSWORD}</password>
                     <timeout>30s</timeout>
-                    <url>https://10.24.194.80/redfish/v1/Systems/1/EthernetInterfaces</url>
+                    <url>https://{HOST.CONN}redfish/v1/Systems/1/EthernetInterfaces</url>
                     <headers>
                         <header>
                             <name>Accept</name>
@@ -694,11 +697,59 @@
                     <output_format>JSON</output_format>
                 </item>
                 <item>
+                    <uuid>3b15f0125fa244bb8fe229c5425823ad</uuid>
+                    <name>Redfish RAID Health Discovery</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.raid.health</key>
+                    <delay>5m</delay>
+                    <history>3d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.body.StorageControllers[0].Status.Health</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1/Storage/RAID_Slot10</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <output_format>JSON</output_format>
+                    <tags>
+                        <tag>
+                            <tag>chassis</tag>
+                            <value>raid</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>a575cf13d6db48098062087cf6a6aa25</uuid>
+                            <expression>last(/Lenovo ThinkSystem SR850 API/redfish.raid.health)=&quot;Critical&quot;</expression>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                            <recovery_expression>last(/Lenovo ThinkSystem SR850 API/redfish.raid.health)=&quot;OK&quot;</recovery_expression>
+                            <name>Redfish RAID Health is Critical</name>
+                            <priority>DISASTER</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
                     <uuid>bfa2392bebbe45cd8e98b48c74404bef</uuid>
                     <name>Redfish Storage Discovery</name>
                     <type>HTTP_AGENT</type>
                     <key>redfish.storage.raid_slot10.raw</key>
                     <delay>5m</delay>
+                    <history>1d</history>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <authtype>BASIC</authtype>
@@ -723,6 +774,157 @@
                     <key>redfish.drives.discovery</key>
                     <delay>0</delay>
                     <item_prototypes>
+                        <item_prototype>
+                            <uuid>a8ee5288c0604547acb41bc26935c300</uuid>
+                            <name>Drive {#DRIVE.NAME}: Drive Status</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.drivestatus[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Oem.Lenovo.DriveStatus || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>status</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>5c4618c4f2fe4455b24c2aa566b1bff3</uuid>
+                                    <expression>last(/Lenovo ThinkSystem SR850 API/redfish.drive.drivestatus[{#DRIVE.NAME}])&lt;&gt;&quot;Online&quot;</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Lenovo ThinkSystem SR850 API/redfish.drive.drivestatus[{#DRIVE.NAME}])=&quot;Online&quot;</recovery_expression>
+                                    <name>Drive {#DRIVE.NAME}: Disk status has changed</name>
+                                    <priority>AVERAGE</priority>
+                                    <description>Disk status has changed!</description>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>disk</tag>
+                                            <value>trigger_status</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <uuid>597691d110f845559d637d11912254a2</uuid>
+                                    <expression>nodata(/Lenovo ThinkSystem SR850 API/redfish.drive.drivestatus[{#DRIVE.NAME}],20m)=1</expression>
+                                    <name>Drive {#DRIVE.NAME}: No data received for 20 minutes</name>
+                                    <priority>AVERAGE</priority>
+                                    <description>Не получены данные о статусе диска {#DRIVE.NAME} в течение 20 минут.</description>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>disk</tag>
+                                            <value>trigger_status</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <uuid>3e1eb5aa55944b5699271481f5bc68c8</uuid>
+                                    <expression>change(/Lenovo ThinkSystem SR850 API/redfish.drive.drivestatus[{#DRIVE.NAME}])&lt;&gt;0</expression>
+                                    <name>Drive {#DRIVE.NAME}: Status has changed</name>
+                                    <priority>AVERAGE</priority>
+                                    <description>Статус диска {#DRIVE.NAME} изменился
+
+Предыдущий статус: {ITEM.LASTVALUE2}
+Новый статус: {ITEM.LASTVALUE1}
+Время изменения: {EVENT.TIME} {EVENT.DATE}</description>
+                                    <tags>
+                                        <tag>
+                                            <tag>disk</tag>
+                                            <value>trigger_status</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>a988d167451a4d0dada5a26918df11f9</uuid>
+                            <name>Drive {#DRIVE.NAME}: Status Health</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.health[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Status.Health || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>health</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>5391ca4fb617467f971165d30d368376</uuid>
+                                    <expression>last(/Lenovo ThinkSystem SR850 API/redfish.drive.health[{#DRIVE.NAME}])=&quot;Critical&quot;</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Lenovo ThinkSystem SR850 API/redfish.drive.health[{#DRIVE.NAME}])&lt;&gt;&quot;Critical&quot;</recovery_expression>
+                                    <name>Drive {#DRIVE.NAME}: Disk health is Critical</name>
+                                    <priority>DISASTER</priority>
+                                    <description>КРИТИЧНО: Диск {#DRIVE.NAME} находится в состоянии Critical!
+
+Требуется немедленная проверка оборудования!</description>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>disk</tag>
+                                            <value>health</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <uuid>c47aa7f2679149ca83cf7faa4bc99a43</uuid>
+                                    <expression>last(/Lenovo ThinkSystem SR850 API/redfish.drive.health[{#DRIVE.NAME}])=&quot;Warning&quot;</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Lenovo ThinkSystem SR850 API/redfish.drive.health[{#DRIVE.NAME}])&lt;&gt;&quot;Warning&quot;</recovery_expression>
+                                    <name>Drive {#DRIVE.NAME}: Disk health is Warning</name>
+                                    <priority>HIGH</priority>
+                                    <description>КРИТИЧНО: Диск {#DRIVE.NAME} находится в состоянии Warning!
+
+Требуется немедленная проверка оборудования!</description>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>disk</tag>
+                                            <value>warning</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
                         <item_prototype>
                             <uuid>c7f674247fee41458d0429767e041f6a</uuid>
                             <name>Drive {#DRIVE.NAME}: Interface</name>
@@ -762,7 +964,7 @@ return data.Protocol || &quot;Unknown&quot;;</parameter>
                             <key>redfish.drive.lifeleftpercent[{#DRIVE.NAME}]</key>
                             <delay>0</delay>
                             <trends>0</trends>
-                            <units>%</units>
+                            <value_type>TEXT</value_type>
                             <preprocessing>
                                 <step>
                                     <type>JAVASCRIPT</type>
@@ -953,6 +1155,7 @@ return data.PartNumber || &quot;Unknown&quot;;</parameter>
                             <type>HTTP_AGENT</type>
                             <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
                             <delay>5m</delay>
+                            <history>1d</history>
                             <trends>0</trends>
                             <value_type>TEXT</value_type>
                             <authtype>BASIC</authtype>
@@ -1071,7 +1274,7 @@ return data.SKU || &quot;Unknown&quot;;</parameter>
                         </item_prototype>
                         <item_prototype>
                             <uuid>99e4363de2134676932d9e84ec9d6995</uuid>
-                            <name>Drive {#DRIVE.NAME}: State</name>
+                            <name>Drive {#DRIVE.NAME}: Status State</name>
                             <type>DEPENDENT</type>
                             <key>redfish.drive.state[{#DRIVE.NAME}]</key>
                             <delay>0</delay>
@@ -1098,38 +1301,6 @@ return data.Status.State || &quot;Unknown&quot;;</parameter>
                                 <tag>
                                     <tag>disk</tag>
                                     <value>state</value>
-                                </tag>
-                            </tags>
-                        </item_prototype>
-                        <item_prototype>
-                            <uuid>a8ee5288c0604547acb41bc26935c300</uuid>
-                            <name>Drive {#DRIVE.NAME}: Status</name>
-                            <type>DEPENDENT</type>
-                            <key>redfish.drive.status[{#DRIVE.NAME}]</key>
-                            <delay>0</delay>
-                            <trends>0</trends>
-                            <value_type>TEXT</value_type>
-                            <preprocessing>
-                                <step>
-                                    <type>JAVASCRIPT</type>
-                                    <parameters>
-                                        <parameter>var data = JSON.parse(value);
-
-if (data.body) {
-    data = data.body;
-}
-
-return data.Oem.Lenovo.DriveStatus || &quot;Unknown&quot;;</parameter>
-                                    </parameters>
-                                </step>
-                            </preprocessing>
-                            <master_item>
-                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
-                            </master_item>
-                            <tags>
-                                <tag>
-                                    <tag>disk</tag>
-                                    <value>status</value>
                                 </tag>
                             </tags>
                         </item_prototype>
@@ -1323,6 +1494,7 @@ return data.MACAddress || &quot;Unknown&quot;;</parameter>
                             <type>HTTP_AGENT</type>
                             <key>redfish.ethernet.raw[{#ETHERNET.ID}]</key>
                             <delay>5m</delay>
+                            <history>1d</history>
                             <trends>0</trends>
                             <value_type>TEXT</value_type>
                             <authtype>BASIC</authtype>
@@ -1703,6 +1875,7 @@ return data.PartNumber || &quot;Unknown&quot;;</parameter>
                             <type>HTTP_AGENT</type>
                             <key>redfish.memory.raw[{#MEMORY.ID}]</key>
                             <delay>5m</delay>
+                            <history>1d</history>
                             <trends>0</trends>
                             <value_type>TEXT</value_type>
                             <authtype>BASIC</authtype>
