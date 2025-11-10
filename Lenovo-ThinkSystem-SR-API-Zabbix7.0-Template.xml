@@ -1805,22 +1805,20 @@ return data.LinkStatus || &quot;Unknown&quot;;</parameter>
     
     data.Members.forEach(function(member, index) {
         if (!member['@odata.id']) {
-            return; // Пропускаем элементы без URL
+            return;
         }
         
         var url = member['@odata.id'];
         
-        if (!url) return; // Пропускаем пустые URL
+        if (!url) return;
         
-        // Удаляем завершающий слеш и разбиваем
         url = url.replace(/\/$/, '');
         var urlParts = url.split('/').filter(function(part) {
-            return part !== ''; // Убираем пустые элементы
+            return part !== '';
         });
         
         var ethernetId = urlParts[urlParts.length - 1];
         
-        // Если ID всё равно пустой, используем индекс
         if (!ethernetId) {
             ethernetId = String(index + 1);
         }
@@ -1835,7 +1833,6 @@ return data.LinkStatus || &quot;Unknown&quot;;</parameter>
     return JSON.stringify(result);
     
 } catch (e) {
-    // Для отладки можно вернуть ошибку
     return JSON.stringify([]);
 }</parameter>
                             </parameters>
@@ -2075,17 +2072,16 @@ return data.Fans[{#FAN.ID}].Status.State || &quot;Unknown&quot;;</parameter>
     
     data.Links.CooledBy.forEach(function(member, index) {
         if (!member['@odata.id']) {
-            return; // Пропускаем элементы без URL
+            return;
         }
         
         var url = member['@odata.id'];
         
-        if (!url) return; // Пропускаем пустые URL
+        if (!url) return;
         
-        // Удаляем завершающий слеш и разбиваем
         url = url.replace(/\/$/, '');
         var urlParts = url.split('/').filter(function(part) {
-            return part !== ''; // Убираем пустые элементы
+            return part !== '';
         });
         
         var fanId = urlParts[urlParts.length - 1];
@@ -2100,7 +2096,6 @@ return data.Fans[{#FAN.ID}].Status.State || &quot;Unknown&quot;;</parameter>
     return JSON.stringify(result);
     
 } catch (e) {
-    // Для отладки можно вернуть ошибку
     return JSON.stringify([]);
 }</parameter>
                             </parameters>
@@ -2697,17 +2692,16 @@ return data.Id || &quot;Unknown&quot;;</parameter>
     
     data.PCIeFunctions.forEach(function(member, index) {
         if (!member['@odata.id']) {
-            return; // Пропускаем элементы без URL
+            return;
         }
         
         var url = member['@odata.id'];
         
-        if (!url) return; // Пропускаем пустые URL
+        if (!url) return;
         
-        // Удаляем завершающий слеш и разбиваем
         url = url.replace(/\/$/, '');
         var urlParts = url.split('/').filter(function(part) {
-            return part !== ''; // Убираем пустые элементы
+            return part !== '';
         });
 
         var pcieId = String(index + 1);
@@ -2722,7 +2716,6 @@ return data.Id || &quot;Unknown&quot;;</parameter>
     return JSON.stringify(result);
     
 } catch (e) {
-    // Для отладки можно вернуть ошибку
     return JSON.stringify([]);
 }</parameter>
                             </parameters>
@@ -3259,17 +3252,16 @@ return data.PowerControl[{#POWER.ID}].Status.State || &quot;Unknown&quot;;</para
     
     data.Links.PoweredBy.forEach(function(member, index) {
         if (!member['@odata.id']) {
-            return; // Пропускаем элементы без URL
+            return;
         }
         
         var url = member['@odata.id'];
         
-        if (!url) return; // Пропускаем пустые URL
+        if (!url) return;
         
-        // Удаляем завершающий слеш и разбиваем
         url = url.replace(/\/$/, '');
         var urlParts = url.split('/').filter(function(part) {
-            return part !== ''; // Убираем пустые элементы
+            return part !== '';
         });
 
         var powerId = urlParts[urlParts.length - 1];
@@ -3286,7 +3278,6 @@ return data.PowerControl[{#POWER.ID}].Status.State || &quot;Unknown&quot;;</para
     return JSON.stringify(result);
     
 } catch (e) {
-    // Для отладки можно вернуть ошибку
     return JSON.stringify([]);
 }</parameter>
                             </parameters>
@@ -3295,7 +3286,7 @@ return data.PowerControl[{#POWER.ID}].Status.State || &quot;Unknown&quot;;</para
                 </discovery_rule>
                 <discovery_rule>
                     <uuid>285fd43fc70a4e10b3c20874e87bc03f</uuid>
-                    <name>Redfish ProcessorCollection Discovery</name>
+                    <name>Redfish Processor Collection Discovery</name>
                     <type>DEPENDENT</type>
                     <key>redfish.procs.discovery</key>
                     <delay>0</delay>
