@@ -1019,6 +1019,10 @@ return data.Oem.Lenovo.DriveStatus || &quot;Unknown&quot;;</parameter>
                                     <tag>disk</tag>
                                     <value>status</value>
                                 </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}]</value>
+                                </tag>
                             </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
@@ -1106,6 +1110,10 @@ return data.Status.Health || &quot;Unknown&quot;;</parameter>
                                     <tag>disk</tag>
                                     <value>health</value>
                                 </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}]</value>
+                                </tag>
                             </tags>
                             <trigger_prototypes>
                                 <trigger_prototype>
@@ -1176,6 +1184,10 @@ return data.Protocol || &quot;Unknown&quot;;</parameter>
                                     <tag>disk</tag>
                                     <value>Interface</value>
                                 </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}]</value>
+                                </tag>
                             </tags>
                         </item_prototype>
                         <item_prototype>
@@ -1207,6 +1219,10 @@ return data.PredictedMediaLifeLeftPercent || &quot;Unknown&quot;;</parameter>
                                 <tag>
                                     <tag>disk</tag>
                                     <value>lifeleftpercent</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}]</value>
                                 </tag>
                             </tags>
                         </item_prototype>
@@ -1240,6 +1256,10 @@ return data.PhysicalLocation.Info || &quot;Unknown&quot;;</parameter>
                                     <tag>disk</tag>
                                     <value>location</value>
                                 </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}]</value>
+                                </tag>
                             </tags>
                         </item_prototype>
                         <item_prototype>
@@ -1271,6 +1291,10 @@ return data.Manufacturer || &quot;Unknown&quot;;</parameter>
                                 <tag>
                                     <tag>disk</tag>
                                     <value>manufacturer</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}]</value>
                                 </tag>
                             </tags>
                         </item_prototype>
@@ -1304,6 +1328,10 @@ return data.Model || &quot;Unknown&quot;;</parameter>
                                     <tag>disk</tag>
                                     <value>model</value>
                                 </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}]</value>
+                                </tag>
                             </tags>
                         </item_prototype>
                         <item_prototype>
@@ -1336,6 +1364,10 @@ return data.Name || &quot;Unknown&quot;;</parameter>
                                     <tag>disk</tag>
                                     <value>name</value>
                                 </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}]</value>
+                                </tag>
                             </tags>
                         </item_prototype>
                         <item_prototype>
@@ -1367,6 +1399,10 @@ return data.PartNumber || &quot;Unknown&quot;;</parameter>
                                 <tag>
                                     <tag>disk</tag>
                                     <value>partnumber</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}]</value>
                                 </tag>
                             </tags>
                         </item_prototype>
@@ -1427,6 +1463,10 @@ return data.SerialNumber || &quot;Unknown&quot;;</parameter>
                                     <tag>disk</tag>
                                     <value>serialnumber</value>
                                 </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}]</value>
+                                </tag>
                             </tags>
                         </item_prototype>
                         <item_prototype>
@@ -1458,6 +1498,10 @@ return data.CapacityBytes || &quot;Unknown&quot;;</parameter>
                                 <tag>
                                     <tag>disk</tag>
                                     <value>size</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}]</value>
                                 </tag>
                             </tags>
                         </item_prototype>
@@ -1491,6 +1535,10 @@ return data.SKU || &quot;Unknown&quot;;</parameter>
                                     <tag>disk</tag>
                                     <value>sku</value>
                                 </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}]</value>
+                                </tag>
                             </tags>
                         </item_prototype>
                         <item_prototype>
@@ -1522,6 +1570,10 @@ return data.Status.State || &quot;Unknown&quot;;</parameter>
                                 <tag>
                                     <tag>disk</tag>
                                     <value>state</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}]</value>
                                 </tag>
                             </tags>
                         </item_prototype>
@@ -1555,6 +1607,10 @@ return data.Oem.Lenovo.Temperature || &quot;Unknown&quot;;</parameter>
                                     <tag>disk</tag>
                                     <value>temperature</value>
                                 </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}]</value>
+                                </tag>
                             </tags>
                         </item_prototype>
                         <item_prototype>
@@ -1586,6 +1642,10 @@ return data.MediaType || &quot;Unknown&quot;;</parameter>
                                 <tag>
                                     <tag>disk</tag>
                                     <value>type</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}]</value>
                                 </tag>
                             </tags>
                         </item_prototype>
@@ -2165,6 +2225,10 @@ if (data.body) {
     data = data.body;
 }
 
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
 return data.AllowedSpeedsMHz || &quot;Unknown&quot;;</parameter>
                                     </parameters>
                                 </step>
@@ -2197,6 +2261,10 @@ if (data.body) {
     data = data.body;
 }
 
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
 return data.Status.Health || &quot;Unknown&quot;;</parameter>
                                     </parameters>
                                 </step>
@@ -2213,10 +2281,12 @@ return data.Status.Health || &quot;Unknown&quot;;</parameter>
                             <trigger_prototypes>
                                 <trigger_prototype>
                                     <uuid>006e626533bf4b16a72c23714378378b</uuid>
-                                    <expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])&lt;&gt;&quot;OK&quot; and last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])&lt;&gt;&quot;Unknown&quot;</expression>
+                                    <expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])&lt;&gt;&quot;OK&quot; and last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])&lt;&gt;&quot;&quot;</expression>
                                     <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
-                                    <recovery_expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])=&quot;OK&quot; and last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])=&quot;Unknown&quot;</recovery_expression>
+                                    <recovery_expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])=&quot;OK&quot; and last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])=&quot;&quot;</recovery_expression>
                                     <name>Memory Slot {#MEMORY.ID} is not OK</name>
+                                    <status>DISABLED</status>
+                                    <discover>NO_DISCOVER</discover>
                                     <priority>HIGH</priority>
                                     <manual_close>YES</manual_close>
                                     <tags>
@@ -2244,6 +2314,10 @@ return data.Status.Health || &quot;Unknown&quot;;</parameter>
 
 if (data.body) {
     data = data.body;
+}
+
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
 }
 
 return data.MemoryLocation.Slot || &quot;Unknown&quot;;</parameter>
@@ -2278,6 +2352,10 @@ if (data.body) {
     data = data.body;
 }
 
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
 return data.Manufacturer || &quot;Unknown&quot;;</parameter>
                                     </parameters>
                                 </step>
@@ -2308,6 +2386,10 @@ return data.Manufacturer || &quot;Unknown&quot;;</parameter>
 
 if (data.body) {
     data = data.body;
+}
+
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
 }
 
 return data.MemoryMedia || &quot;Unknown&quot;;</parameter>
@@ -2342,6 +2424,10 @@ if (data.body) {
     data = data.body;
 }
 
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
 return data.Name || &quot;Unknown&quot;;</parameter>
                                     </parameters>
                                 </step>
@@ -2372,6 +2458,10 @@ return data.Name || &quot;Unknown&quot;;</parameter>
 
 if (data.body) {
     data = data.body;
+}
+
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
 }
 
 return data.PartNumber || &quot;Unknown&quot;;</parameter>
@@ -2434,6 +2524,10 @@ if (data.body) {
     data = data.body;
 }
 
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
 return data.SerialNumber || &quot;Unknown&quot;;</parameter>
                                     </parameters>
                                 </step>
@@ -2468,6 +2562,10 @@ if (data.body) {
     data = data.body;
 }
 
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
 return data.CapacityMiB || &quot;Unknown&quot;;</parameter>
                                     </parameters>
                                 </step>
@@ -2500,6 +2598,10 @@ if (data.body) {
     data = data.body;
 }
 
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;Absent&quot;;
+}
+
 return data.Status.State || &quot;Unknown&quot;;</parameter>
                                     </parameters>
                                 </step>
@@ -2513,6 +2615,23 @@ return data.Status.State || &quot;Unknown&quot;;</parameter>
                                     <value>state</value>
                                 </tag>
                             </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>45f6387b630442559b1f457195c7b820</uuid>
+                                    <expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.memory.state[{#MEMORY.ID}])=&quot;Disabled&quot;</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.memory.state[{#MEMORY.ID}])=&quot;Disabled&quot; and last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.memory.state[{#MEMORY.ID}])=&quot;Absent&quot;</recovery_expression>
+                                    <name>Memory State {#MEMORY.ID} is Disabled</name>
+                                    <priority>HIGH</priority>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>memory</tag>
+                                            <value>disabled</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <uuid>43607e0daa504dc6b43b17b8c1c7013f</uuid>
@@ -2530,6 +2649,10 @@ return data.Status.State || &quot;Unknown&quot;;</parameter>
 
 if (data.body) {
     data = data.body;
+}
+
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
 }
 
 return data.MemoryDeviceType || &quot;Unknown&quot;;</parameter>
