@@ -900,7 +900,7 @@
                     <uuid>e78b3f306eb74a8b88e2bf69cae563b6</uuid>
                     <name>Redfish RAID Health Discovery</name>
                     <type>HTTP_AGENT</type>
-                    <key>redfish.raid.health</key>
+                    <key>redfish.raid.health.raw</key>
                     <delay>5m</delay>
                     <history>3d</history>
                     <trends>0</trends>
@@ -934,9 +934,9 @@
                     <triggers>
                         <trigger>
                             <uuid>d5aec119002c4a69bb1c3f0a778c3f51</uuid>
-                            <expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.raid.health)=&quot;Critical&quot;</expression>
+                            <expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.raid.health.raw)=&quot;Critical&quot;</expression>
                             <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
-                            <recovery_expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.raid.health)=&quot;OK&quot;</recovery_expression>
+                            <recovery_expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.raid.health.raw)=&quot;OK&quot;</recovery_expression>
                             <name>Redfish RAID Health is Critical</name>
                             <priority>DISASTER</priority>
                             <manual_close>YES</manual_close>
@@ -947,7 +947,7 @@
                     <uuid>823d3b2900064b9da289ba4d2aab2c7c</uuid>
                     <name>Redfish Storage Discovery</name>
                     <type>HTTP_AGENT</type>
-                    <key>redfish.storage.raid_slot10.raw</key>
+                    <key>redfish.storage.raid.raw</key>
                     <delay>5m</delay>
                     <history>1d</history>
                     <trends>0</trends>
@@ -988,6 +988,15 @@
                             <delay>0</delay>
                             <trends>0</trends>
                             <value_type>TEXT</value_type>
+                            <description>Online — диск работает и доступен для использования.
+
+JBOD (Just a Bunch Of Disks) — диск настроен как независимый, без RAID, просто как отдельное устройство.
+
+Unconfigured good — диск распознан и исправен, но не настроен в RAID-массив (доступен для настройки).
+
+Unconfigured bad — диск распознан, но помечен как неисправный или с ошибками, не может быть использован в массиве.
+
+Hot Spare - резервный диск.</description>
                             <preprocessing>
                                 <step>
                                     <type>JAVASCRIPT</type>
@@ -1014,19 +1023,25 @@ return data.Oem.Lenovo.DriveStatus || &quot;Unknown&quot;;</parameter>
                             <trigger_prototypes>
                                 <trigger_prototype>
                                     <uuid>0afa8beb1ba84fe589fa46b5c801153c</uuid>
-                                    <expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.drive.drivestatus[{#DRIVE.NAME}])&lt;&gt;&quot;Online&quot;</expression>
+                                    <expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.drive.drivestatus[{#DRIVE.NAME}])=&quot;Unconfigured bad&quot;</expression>
                                     <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
-                                    <recovery_expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.drive.drivestatus[{#DRIVE.NAME}])=&quot;Online&quot;</recovery_expression>
-                                    <name>Drive {#DRIVE.NAME}: Disk status has changed</name>
-                                    <status>DISABLED</status>
-                                    <discover>NO_DISCOVER</discover>
-                                    <priority>AVERAGE</priority>
-                                    <description>Disk status has changed!</description>
+                                    <recovery_expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.drive.drivestatus[{#DRIVE.NAME}])&lt;&gt;&quot;Unconfigured bad&quot;</recovery_expression>
+                                    <name>Drive {#DRIVE.NAME}: Disk status is Unconfigured bad!</name>
+                                    <priority>DISASTER</priority>
+                                    <description>Disk status has changed!
+
+Statuses:
+
+Online — диск работает и доступен для использования.
+JBOD (Just a Bunch Of Disks) — диск настроен как независимый, без RAID, просто как отдельное устройство.
+Unconfigured good — диск распознан и исправен, но не настроен в RAID-массив (доступен для настройки).
+Unconfigured bad — диск распознан, но помечен как неисправный или с ошибками, не может быть использован в массиве.
+Hot Spare — резервный диск.</description>
                                     <manual_close>YES</manual_close>
                                     <tags>
                                         <tag>
                                             <tag>disk</tag>
-                                            <value>trigger_status</value>
+                                            <value>bad</value>
                                         </tag>
                                     </tags>
                                 </trigger_prototype>
@@ -1040,7 +1055,7 @@ return data.Oem.Lenovo.DriveStatus || &quot;Unknown&quot;;</parameter>
                                     <tags>
                                         <tag>
                                             <tag>disk</tag>
-                                            <value>trigger_status</value>
+                                            <value>no_data_received</value>
                                         </tag>
                                     </tags>
                                 </trigger_prototype>
@@ -1048,6 +1063,8 @@ return data.Oem.Lenovo.DriveStatus || &quot;Unknown&quot;;</parameter>
                                     <uuid>c0947cb2d7644089bcb7e58bbdbf35c7</uuid>
                                     <expression>change(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.drive.drivestatus[{#DRIVE.NAME}])&lt;&gt;&quot;Online&quot;</expression>
                                     <name>Drive {#DRIVE.NAME}: Status has changed</name>
+                                    <status>DISABLED</status>
+                                    <discover>NO_DISCOVER</discover>
                                     <priority>AVERAGE</priority>
                                     <description>Статус диска {#DRIVE.NAME} изменился</description>
                                     <tags>
@@ -1105,7 +1122,7 @@ return data.Status.Health || &quot;Unknown&quot;;</parameter>
                                     <tags>
                                         <tag>
                                             <tag>disk</tag>
-                                            <value>health</value>
+                                            <value>critical</value>
                                         </tag>
                                     </tags>
                                 </trigger_prototype>
@@ -1574,7 +1591,7 @@ return data.MediaType || &quot;Unknown&quot;;</parameter>
                         </item_prototype>
                     </item_prototypes>
                     <master_item>
-                        <key>redfish.storage.raid_slot10.raw</key>
+                        <key>redfish.storage.raid.raw</key>
                     </master_item>
                     <preprocessing>
                         <step>
@@ -1659,6 +1676,23 @@ return data.Status.Health || &quot;Unknown&quot;;</parameter>
                                     <value>linkhealth</value>
                                 </tag>
                             </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>164e97074bd04d25bc3e1af5b1a44540</uuid>
+                                    <expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.ethernet.health[{#ETHERNET.ID}])&lt;&gt;&quot;OK&quot;</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.ethernet.health[{#ETHERNET.ID}])=&quot;OK&quot;</recovery_expression>
+                                    <name>Network Link {#ETHERNET.ID} is not OK</name>
+                                    <priority>HIGH</priority>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>ethernet</tag>
+                                            <value>linkhealth</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <uuid>bba438d22d5f43c183b0df64a895dfe9</uuid>
@@ -1811,6 +1845,10 @@ return data.LinkStatus || &quot;Unknown&quot;;</parameter>
         var url = member['@odata.id'];
         
         if (!url) return;
+
+        if (url.indexOf('ToManager') !== -1) {
+            return;
+        }
         
         url = url.replace(/\/$/, '');
         var urlParts = url.split('/').filter(function(part) {
@@ -2172,6 +2210,23 @@ return data.Status.Health || &quot;Unknown&quot;;</parameter>
                                     <value>health</value>
                                 </tag>
                             </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>006e626533bf4b16a72c23714378378b</uuid>
+                                    <expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])&lt;&gt;&quot;OK&quot; and last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])&lt;&gt;&quot;Unknown&quot;</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])=&quot;OK&quot; and last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])=&quot;Unknown&quot;</recovery_expression>
+                                    <name>Memory Slot {#MEMORY.ID} is not OK</name>
+                                    <priority>HIGH</priority>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>memory</tag>
+                                            <value>health</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <uuid>cbcc5a36b96445bea3e35dd2d6e60968</uuid>
@@ -2794,6 +2849,23 @@ return data.PowerSupplies[{#POWER.ID}].EfficiencyPercent || &quot;Unknown&quot;;
                                     <value>efficiencypercent</value>
                                 </tag>
                             </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>b15d3ec2ac3948ad99195b0eeb33d323</uuid>
+                                    <expression>min(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.power.efficiencypercent[{#POWER.NAME}],3m)&gt;=98</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>min(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.power.efficiencypercent[{#POWER.NAME}],3m)&lt;98</recovery_expression>
+                                    <name>{#POWER.NAME}: Efficiency Percent is HIGH</name>
+                                    <priority>HIGH</priority>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>power</tag>
+                                            <value>efficiencypercent</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <uuid>f9640fe238e14409a86e6a11096099b4</uuid>
@@ -2866,7 +2938,7 @@ return data.PowerControl[{#POWER.ID}].Status.Health || &quot;Unknown&quot;;</par
                                     <expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.power.health[{#POWER.NAME}])&lt;&gt;&quot;OK&quot;</expression>
                                     <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
                                     <recovery_expression>last(/Lenovo-ThinkSystem-SR-API-Zabbix7.0-Template/redfish.power.health[{#POWER.NAME}])=&quot;OK&quot;</recovery_expression>
-                                    <name>Power unit {#POWER.NAME}: Power unit is Critical</name>
+                                    <name>{#POWER.NAME}: Power unit is Critical</name>
                                     <priority>DISASTER</priority>
                                     <manual_close>YES</manual_close>
                                     <tags>
