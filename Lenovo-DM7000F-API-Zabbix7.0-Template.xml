@@ -1,0 +1,3999 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>7.0</version>
+    <template_groups>
+        <template_group>
+            <uuid>3b2953c35b174dd0bffc9288d3b2b796</uuid>
+            <name>Серверное оборудование</name>
+        </template_group>
+    </template_groups>
+    <templates>
+        <template>
+            <uuid>938da3f6594740c5b3d5472bdf2a92b9</uuid>
+            <template>Lenovo-DM7000F-API-Zabbix7.0-Template</template>
+            <name>Lenovo-DM7000F-API-Zabbix7.0-Template</name>
+            <groups>
+                <group>
+                    <name>Серверное оборудование</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <uuid>b59861917dc34846ab9e0333b376be81</uuid>
+                    <name>Redfish Chassis Discovery</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.chassis.inventoryraw</key>
+                    <delay>5m</delay>
+                    <history>3d</history>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1/Memory</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <output_format>JSON</output_format>
+                    <tags>
+                        <tag>
+                            <tag>chassis</tag>
+                            <value>data</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>844cb33cb09644a7912a6f198e9fc658</uuid>
+                    <name>Redfish Fans Discovery</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.fan.collection.raw</key>
+                    <delay>5m</delay>
+                    <history>3d</history>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <output_format>JSON</output_format>
+                    <tags>
+                        <tag>
+                            <tag>fan</tag>
+                            <value>data</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>e5743da4e18e47fa93e79ac4ed7b3bbd</uuid>
+                    <name>Chassis Bios Version</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.chassis.bios.version</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.BiosVersion</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>chassis</tag>
+                            <value>biosversion</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>d18eda31b270474dadf60a46323ae45e</uuid>
+                    <name>Chassis FruPartNumber</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.chassis.frupartnumber</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.Oem.Lenovo.FruPartNumber</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Chassis/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>chassis</tag>
+                            <value>frupartnumber</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>967a43b405894f6f846dee361cf36478</uuid>
+                    <name>Chassis Host Name</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.chassis.host.name</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.HostName</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>chassis</tag>
+                            <value>hostname</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>099b0cf959c24461828955c6849961db</uuid>
+                    <name>Chassis Location</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.chassis.location</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.Location.PostalAddress.Location</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Chassis/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>chassis</tag>
+                            <value>location</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>96a63b2baf4b4e7797e67da801f6c7e6</uuid>
+                    <name>Chassis Location Contacts</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.chassis.locationcontacts</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.Location.Contacts.ContactName</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Chassis/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>chassis</tag>
+                            <value>locationcontacts</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>4c9f31d9df484dc8adb7e145b5cc1420</uuid>
+                    <name>Chassis Location Name</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.chassis.locationname</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.Location.PostalAddress.Name</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Chassis/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>chassis</tag>
+                            <value>locationname</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>a1f49070825c428881ef601e0ded8ea0</uuid>
+                    <name>Chassis Location Rack</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.chassis.locationrack</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.Location.Placement.Rack</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Chassis/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>chassis</tag>
+                            <value>locationrack</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>db7da9b8e7f7429e954ebe390b087612</uuid>
+                    <name>Chassis Location RackOffset</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.chassis.locationrackoffset</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.Location.Placement.RackOffset</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Chassis/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>chassis</tag>
+                            <value>locationrackoffset</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>64c69fa009534ff7abffea6108333b94</uuid>
+                    <name>Chassis Location Room</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.chassis.locationroom</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.Location.PostalAddress.Room</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Chassis/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>chassis</tag>
+                            <value>locationroom</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>9c9293ad37c443c2aafcb0fc2b50f020</uuid>
+                    <name>Chassis PartNumber</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.chassis.partnumber</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.PartNumber</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Chassis/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>chassis</tag>
+                            <value>partnumber</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>3739ad7a6efb4064a6c8ce0ce68f1310</uuid>
+                    <name>Chassis SKU</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.chassis.sku</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.SKU</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Chassis/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>chassis</tag>
+                            <value>sku</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>3fc8c9972ae440358223d2d59f642774</uuid>
+                    <name>Chassis SystemBoardSerialNumber</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.chassis.systemboardserialnumber</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.Oem.Lenovo.SystemBoardSerialNumber</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Chassis/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>chassis</tag>
+                            <value>systemboardserialnumber</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>311136c05cfc4b06b4b424a2c3f839ca</uuid>
+                    <name>Server HostName</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.hostname</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.HostName</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>info</tag>
+                            <value>statushealth</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>9cbd4b2241a24984b0494929cdcd5b86</uuid>
+                    <name>Server MemorySummary</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.memorysummary</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <units>GB</units>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.body.MemorySummary.TotalSystemMemoryGiB</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <output_format>JSON</output_format>
+                    <tags>
+                        <tag>
+                            <tag>memory</tag>
+                            <value>memorysummary</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>a3feb0b26f514294a3e0df3b5092172a</uuid>
+                    <name>Server Model</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.model</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.Model</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>info</tag>
+                            <value>model</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>ee4b7148a944456f919764b395ddbac7</uuid>
+                    <name>Server PowerState</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.powerstate</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.PowerState</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>info</tag>
+                            <value>powerstate</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>75f496afb628498fb7fcf95973bcd464</uuid>
+                    <name>Server ProcessorModel</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.processormodel</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.ProcessorSummary.Model</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>info</tag>
+                            <value>processormodel</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>17a55580cdef429eb680f48f89a8f307</uuid>
+                    <name>Server SerialNumber</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.serialnumber</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.SerialNumber</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>info</tag>
+                            <value>serialnumber</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>f3d48970398647118b443d9217c2172a</uuid>
+                    <name>Server StatusHealth</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.statushealth</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.ProcessorSummary.Status.Health</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>info</tag>
+                            <value>statushealth</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>8f3429d11c5349279c7a6156b89b848e</uuid>
+                    <name>Server StatusState</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.inventory.statusstate</key>
+                    <delay>5m</delay>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.ProcessorSummary.Status.State</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <tags>
+                        <tag>
+                            <tag>info</tag>
+                            <value>statusstate</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>ce69a377063f404095e3751aeb903d8e</uuid>
+                    <name>Redfish Memory Discovery</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.memory.collection.raw</key>
+                    <delay>5m</delay>
+                    <history>3d</history>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1/Memory</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <output_format>JSON</output_format>
+                    <tags>
+                        <tag>
+                            <tag>memory</tag>
+                            <value>data</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>37508ad1e6614beca8dc667f6cc9d210</uuid>
+                    <name>Redfish Network Discovery</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.network.inventoryraw</key>
+                    <delay>5m</delay>
+                    <history>3d</history>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1/EthernetInterfaces</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <output_format>JSON</output_format>
+                    <tags>
+                        <tag>
+                            <tag>ethernet</tag>
+                            <value>data</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>bf678fd00e444d9cb0a176fbb886badd</uuid>
+                    <name>Redfish PCIe Discovery</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.pcie.collection.raw</key>
+                    <delay>5m</delay>
+                    <history>3d</history>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <output_format>JSON</output_format>
+                    <tags>
+                        <tag>
+                            <tag>pcie</tag>
+                            <value>data</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>dafdb81a70e94cb495ad6cb363fee258</uuid>
+                    <name>Redfish Power Discovery</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.power.collection.raw</key>
+                    <delay>5m</delay>
+                    <history>3d</history>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <output_format>JSON</output_format>
+                    <tags>
+                        <tag>
+                            <tag>power</tag>
+                            <value>data</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>b3287c4607e24635b5bc9006b7327b35</uuid>
+                    <name>Redfish Processors Discovery</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.proc.collection.raw</key>
+                    <delay>5m</delay>
+                    <history>3d</history>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1/Processors</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <output_format>JSON</output_format>
+                    <tags>
+                        <tag>
+                            <tag>processor</tag>
+                            <value>data</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>0ac8fbb6953d404d9a0b282cb48be7cf</uuid>
+                    <name>Redfish RAID Health Discovery</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.raid.health.raw</key>
+                    <delay>5m</delay>
+                    <history>3d</history>
+                    <trends>0</trends>
+                    <status>DISABLED</status>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$.body.StorageControllers[0].Status.Health</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/redfish/v1/Systems/1/Storage/{$RAID_NAME}</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <output_format>JSON</output_format>
+                    <tags>
+                        <tag>
+                            <tag>disk</tag>
+                            <value>raid</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>739be6171efb417d895825e8565a024e</uuid>
+                            <expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.raid.health.raw)=&quot;Critical&quot;</expression>
+                            <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                            <recovery_expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.raid.health.raw)=&quot;OK&quot;</recovery_expression>
+                            <name>Redfish RAID Health is Critical</name>
+                            <priority>DISASTER</priority>
+                            <manual_close>YES</manual_close>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>7d0244e7ade14a92a8eed3843ab1a67a</uuid>
+                    <name>Redfish Storage Discovery</name>
+                    <type>HTTP_AGENT</type>
+                    <key>redfish.storage.raid.raw</key>
+                    <delay>5m</delay>
+                    <history>1d</history>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <authtype>BASIC</authtype>
+                    <username>{$API_USER}</username>
+                    <password>{$API_PASSWORD}</password>
+                    <timeout>30s</timeout>
+                    <url>https://{HOST.CONN}/api/storage/disks</url>
+                    <headers>
+                        <header>
+                            <name>Accept</name>
+                            <value>application/json</value>
+                        </header>
+                    </headers>
+                    <output_format>JSON</output_format>
+                    <tags>
+                        <tag>
+                            <tag>disk</tag>
+                            <value>data</value>
+                        </tag>
+                    </tags>
+                </item>
+            </items>
+            <discovery_rules>
+                <discovery_rule>
+                    <uuid>af1b3a62d1e947f68e53714f62e7d4ef</uuid>
+                    <name>Redfish Drives Discovery</name>
+                    <type>DEPENDENT</type>
+                    <key>redfish.drives.discovery</key>
+                    <delay>0</delay>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>6bdd9867c5434e34b8c33b5f68910791</uuid>
+                            <name>Drive {#DRIVE.NAME}: Drive Status</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.drivestatus[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <description>Online — диск работает и доступен для использования.
+
+JBOD (Just a Bunch Of Disks) — диск настроен как независимый, без RAID, просто как отдельное устройство.
+
+Unconfigured good — диск распознан и исправен, но не настроен в RAID-массив (доступен для настройки).
+
+Unconfigured bad — диск распознан, но помечен как неисправный или с ошибками, не может быть использован в массиве.
+
+Hot Spare - резервный диск.</description>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Oem.Lenovo.DriveStatus || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>status</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>c402aa0931074fa8b7b6de44e287d5ac</uuid>
+                                    <expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.drive.drivestatus[{#DRIVE.NAME}])=&quot;Unconfigured bad&quot;</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.drive.drivestatus[{#DRIVE.NAME}])&lt;&gt;&quot;Unconfigured bad&quot;</recovery_expression>
+                                    <name>Drive {#DRIVE.NAME}: Disk status is Unconfigured bad!</name>
+                                    <status>DISABLED</status>
+                                    <discover>NO_DISCOVER</discover>
+                                    <priority>DISASTER</priority>
+                                    <description>Disk status has changed!
+
+Statuses:
+
+Online — диск работает и доступен для использования.
+JBOD (Just a Bunch Of Disks) — диск настроен как независимый, без RAID, просто как отдельное устройство.
+Unconfigured good — диск распознан и исправен, но не настроен в RAID-массив (доступен для настройки).
+Unconfigured bad — диск распознан, но помечен как неисправный или с ошибками, не может быть использован в массиве.
+Hot Spare — резервный диск.</description>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>disk</tag>
+                                            <value>bad</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <uuid>28d866b3260a44dfa7637775f4a0f886</uuid>
+                                    <expression>nodata(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.drive.drivestatus[{#DRIVE.NAME}],20m)=1</expression>
+                                    <name>Drive {#DRIVE.NAME}: No data received for 20 minutes</name>
+                                    <status>DISABLED</status>
+                                    <discover>NO_DISCOVER</discover>
+                                    <priority>AVERAGE</priority>
+                                    <description>Не получены данные о статусе диска {#DRIVE.NAME} в течение 20 минут.</description>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>disk</tag>
+                                            <value>no_data_received</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                                <trigger_prototype>
+                                    <uuid>327c1b3ea4e44391b63ec7963a3d2821</uuid>
+                                    <expression>change(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.drive.drivestatus[{#DRIVE.NAME}])&lt;&gt;&quot;Online&quot;</expression>
+                                    <name>Drive {#DRIVE.NAME}: Status has changed</name>
+                                    <status>DISABLED</status>
+                                    <discover>NO_DISCOVER</discover>
+                                    <priority>AVERAGE</priority>
+                                    <description>Статус диска {#DRIVE.NAME} изменился</description>
+                                    <tags>
+                                        <tag>
+                                            <tag>disk</tag>
+                                            <value>trigger_status</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>f4804ff00a484bcf8d32a01a422cefb4</uuid>
+                            <name>Drive {#DRIVE.NAME}: Status Health</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.health[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Status.Health || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>health</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>187f5a1d009446a9999f721dadc88a3f</uuid>
+                                    <expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.drive.health[{#DRIVE.NAME}])=&quot;Warning&quot;</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.drive.health[{#DRIVE.NAME}])&lt;&gt;&quot;Warning&quot;</recovery_expression>
+                                    <name>Drive {#DRIVE.NAME}: Disk health is Warning</name>
+                                    <status>DISABLED</status>
+                                    <discover>NO_DISCOVER</discover>
+                                    <priority>HIGH</priority>
+                                    <description>КРИТИЧНО: Диск {#DRIVE.NAME} находится в состоянии Warning!
+
+Требуется немедленная проверка оборудования!</description>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>disk</tag>
+                                            <value>warning</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>6f8202595fbb46a88489bbd090692b7d</uuid>
+                            <name>Drive {#DRIVE.NAME}: Interface</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.interface[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Protocol || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>Interface</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>c610ceed8f4640bf894d8bc2f0de1890</uuid>
+                            <name>Drive {#DRIVE.NAME}: LifeLeftPercent</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.lifeleftpercent[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PredictedMediaLifeLeftPercent || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>lifeleftpercent</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>16267a8c05294b90850fcc947cf3b028</uuid>
+                            <name>Drive {#DRIVE.NAME}: Model</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.model[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.model || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>model</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>a795b59441ff49cd91092285e6a279a8</uuid>
+                            <name>Drive {#DRIVE.NAME}: Name</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.name[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.name || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>name</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>608212d07c254932952de706378008c8</uuid>
+                            <name>Drive {#DRIVE.NAME}: Node name</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.node[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.node.name || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>node</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>e8e234fe259f42d4a1df0128d3ae042d</uuid>
+                            <name>Drive {#DRIVE.NAME}: Part Number</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.partnumber[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PartNumber || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>partnumber</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>ff06780d63dc4bd48b28d8f6e2337acb</uuid>
+                            <name>Drive {#DRIVE.NAME} Raw Data</name>
+                            <type>HTTP_AGENT</type>
+                            <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            <delay>5m</delay>
+                            <history>1d</history>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <authtype>BASIC</authtype>
+                            <username>{$API_USER}</username>
+                            <password>{$API_PASSWORD}</password>
+                            <timeout>30s</timeout>
+                            <url>https://{HOST.CONN}{#DRIVE.URL}</url>
+                            <headers>
+                                <header>
+                                    <name>Accept</name>
+                                    <value>application/json</value>
+                                </header>
+                            </headers>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>data</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>9ab4066a1e4340b5bd1cf963f7247cda</uuid>
+                            <name>Drive {#DRIVE.NAME}: Serial Number</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.serialnumber[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.serial_number || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>serialnumber</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>bfb6f2d63a0e41f78df0eedd6d63a58e</uuid>
+                            <name>Drive {#DRIVE.NAME}: Usable size</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.size[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <units>B</units>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.usable_size || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>size</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>d8be44ca943e4f96ae094c1c4a413c72</uuid>
+                            <name>Drive {#DRIVE.NAME}: SKU</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.sku[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.SKU || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>sku</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>667e641714ac40aba0a78d989e59de68</uuid>
+                            <name>Drive {#DRIVE.NAME}: Status State</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.state[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.state || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>state</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>c05c9189ed6e4ae7bd7765828a41bd99</uuid>
+                                    <expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.drive.state[{#DRIVE.NAME}])=&quot;broken&quot;</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.drive.state[{#DRIVE.NAME}])=&quot;present&quot;</recovery_expression>
+                                    <name>Disk {#DRIVE.NAME} Failed</name>
+                                    <priority>DISASTER</priority>
+                                    <description>КРИТИЧНО: Диск {#DRIVE.NAME} находится в состоянии Broken!
+
+Требуется немедленная проверка оборудования!</description>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>disk</tag>
+                                            <value>broken</value>
+                                        </tag>
+                                        <tag>
+                                            <tag>disk</tag>
+                                            <value>status</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>6fe7b07ebe224515b4a024ff9e38e521</uuid>
+                            <name>Drive {#DRIVE.NAME}: Temperature</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.temperature[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Oem.Lenovo.Temperature || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>temperature</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>e884fd19ac35442b949f56079a4585e5</uuid>
+                            <name>Drive {#DRIVE.NAME}: Type</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.type[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.type || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>type</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>a759eef963074e5bafddd7f09e856638</uuid>
+                            <name>Drive {#DRIVE.NAME}: Vendor</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.drive.vendor[{#DRIVE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.vendor || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.drive.raw[{#DRIVE.NAME}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>disk</tag>
+                                    <value>vendor</value>
+                                </tag>
+                                <tag>
+                                    <tag>drive</tag>
+                                    <value>{#DRIVE.NAME}</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <master_item>
+                        <key>redfish.storage.raid.raw</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <parameters>
+                                <parameter>try {
+    var data = JSON.parse(value);
+
+    // Разворачиваем body, если есть
+    if (data.body) {
+        data = data.body;
+    }
+
+    var result = [];
+
+    // Проверяем records
+    if (!data.records || !Array.isArray(data.records)) {
+        throw new Error('records array not found');
+    }
+
+    data.records.forEach(function(disk) {
+        var diskName = disk.name;
+        if (!diskName) {
+            return; // пропускаем, если нет имени
+        }
+
+        // Формируем URL вручную, если _links нет
+        var href = '/api/storage/disks/' + encodeURIComponent(diskName);
+
+        result.push({
+            &quot;{#DRIVE.NAME}&quot;: diskName,
+            &quot;{#DRIVE.URL}&quot;: href,
+            &quot;{#DRIVE.FULLURL}&quot;: &quot;https://{HOST.CONN}&quot; + href
+        });
+    });
+
+    return JSON.stringify(result);
+
+} catch (e) {
+    // Можно логировать ошибку для отладки (Zabbix её не увидит, но полезно)
+    // return JSON.stringify({error: e.message});
+    return JSON.stringify([]);
+}</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                </discovery_rule>
+                <discovery_rule>
+                    <uuid>f9d9f137595944c5bb01f9f89e57225f</uuid>
+                    <name>Redfish Ethernet Discovery</name>
+                    <type>DEPENDENT</type>
+                    <key>redfish.ethernet.discovery</key>
+                    <delay>0</delay>
+                    <status>DISABLED</status>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>472e631ed5e848b08967da94614a9420</uuid>
+                            <name>Network NIC {#ETHERNET.ID}: LinkHealth</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.ethernet.health[{#ETHERNET.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Status.Health || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.ethernet.raw[{#ETHERNET.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>ethernet</tag>
+                                    <value>linkhealth</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>3c486776d6834dd2ac4dd6619afe4b77</uuid>
+                                    <expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.ethernet.health[{#ETHERNET.ID}])&lt;&gt;&quot;OK&quot;</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.ethernet.health[{#ETHERNET.ID}])=&quot;OK&quot;</recovery_expression>
+                                    <name>Network Link {#ETHERNET.ID} is not OK</name>
+                                    <priority>HIGH</priority>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>ethernet</tag>
+                                            <value>linkhealth</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>b67497dceb9e43b6827230446416a423</uuid>
+                            <name>Network NIC {#ETHERNET.ID}: MACAddress</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.ethernet.mac[{#ETHERNET.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.MACAddress || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.ethernet.raw[{#ETHERNET.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>ethernet</tag>
+                                    <value>mac</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>e857f9da19e743468c667ec6a02e2a76</uuid>
+                            <name>Ethernet {#ETHERNET.ID} Raw Data</name>
+                            <type>HTTP_AGENT</type>
+                            <key>redfish.ethernet.raw[{#ETHERNET.ID}]</key>
+                            <delay>5m</delay>
+                            <history>1d</history>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <authtype>BASIC</authtype>
+                            <username>{$API_USER}</username>
+                            <password>{$API_PASSWORD}</password>
+                            <timeout>30s</timeout>
+                            <url>https://{HOST.CONN}{#ETHERNET.URL}</url>
+                            <headers>
+                                <header>
+                                    <name>Accept</name>
+                                    <value>application/json</value>
+                                </header>
+                            </headers>
+                            <tags>
+                                <tag>
+                                    <tag>ethernet</tag>
+                                    <value>data</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>c9483d0cc1fb47c3a933ee2fb5dc8670</uuid>
+                            <name>Network NIC {#ETHERNET.ID}: LinkState</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.ethernet.state[{#ETHERNET.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Status.State || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.ethernet.raw[{#ETHERNET.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>ethernet</tag>
+                                    <value>linkstate</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>0fb307886df64d309fbfd310baa821a3</uuid>
+                            <name>Network NIC {#ETHERNET.ID}: LinkStatus</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.ethernet.type[{#ETHERNET.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.LinkStatus || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.ethernet.raw[{#ETHERNET.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>ethernet</tag>
+                                    <value>linkstatus</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <master_item>
+                        <key>redfish.network.inventoryraw</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <parameters>
+                                <parameter>try {
+    var data = JSON.parse(value);
+    
+    if (data.body) {
+        data = data.body;
+    }
+    
+    var result = [];
+    if (!data.Members || !Array.isArray(data.Members)) {
+        throw new Error('Members array not found');
+    }
+    
+    data.Members.forEach(function(member, index) {
+        if (!member['@odata.id']) {
+            return;
+        }
+        
+        var url = member['@odata.id'];
+        
+        if (!url) return;
+
+        if (url.indexOf('ToManager') !== -1) {
+            return;
+        }
+        
+        url = url.replace(/\/$/, '');
+        var urlParts = url.split('/').filter(function(part) {
+            return part !== '';
+        });
+        
+        var ethernetId = urlParts[urlParts.length - 1];
+        
+        if (!ethernetId) {
+            ethernetId = String(index + 1);
+        }
+        
+        result.push({
+            &quot;{#ETHERNET.URL}&quot;: url,
+            &quot;{#ETHERNET.ID}&quot;: ethernetId,
+            &quot;{#ETHERNET.NAME}&quot;: &quot;Memory Slot &quot; + ethernetId
+        });
+    });
+    
+    return JSON.stringify(result);
+    
+} catch (e) {
+    return JSON.stringify([]);
+}</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                </discovery_rule>
+                <discovery_rule>
+                    <uuid>392638d9e5024c33b4085f9c73299673</uuid>
+                    <name>Redfish Fan Discovery</name>
+                    <type>DEPENDENT</type>
+                    <key>redfish.fan.discovery</key>
+                    <delay>0</delay>
+                    <status>DISABLED</status>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>7db0d3ebc8a6409e9e794481be93c555</uuid>
+                            <name>Fan {#FAN.ID} Health</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.fan.health[{#FAN.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Fans[{#FAN.ID}].Status.Health || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.fan.raw[{#FAN.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>fan</tag>
+                                    <value>health</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>117bc85306414e638675d8cf44a0bdda</uuid>
+                                    <expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.fan.health[{#FAN.NAME}])&lt;&gt;&quot;OK&quot;</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.fan.health[{#FAN.NAME}])=&quot;OK&quot;</recovery_expression>
+                                    <name>Fan {#FAN.ID}: Fan health is bad</name>
+                                    <priority>DISASTER</priority>
+                                    <description>КРИТИЧНО: Кулаер {#FAN.NAME} находится в плохом состоянии!
+
+Требуется немедленная проверка оборудования!</description>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>fan</tag>
+                                            <value>state</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>08b81b8cabf1451abb8041e193eab17b</uuid>
+                            <name>Fan {#FAN.ID} Location</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.fan.location[{#FAN.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Fans[{#FAN.ID}].Oem.Lenovo.Location.Info || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.fan.raw[{#FAN.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>fan</tag>
+                                    <value>location</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>8217904f9617418e9a44eceb620b62e0</uuid>
+                            <name>Fan {#FAN.ID} Name</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.fan.name[{#FAN.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Fans[{#FAN.ID}].Name || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.fan.raw[{#FAN.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>fan</tag>
+                                    <value>name</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>0431b5af04f3436ca757182da1929f6a</uuid>
+                            <name>FAN {#FAN.ID} Raw Data</name>
+                            <type>HTTP_AGENT</type>
+                            <key>redfish.fan.raw[{#FAN.ID}]</key>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <authtype>BASIC</authtype>
+                            <username>{$API_USER}</username>
+                            <password>{$API_PASSWORD}</password>
+                            <url>https://{HOST.CONN}{#FAN.URL}</url>
+                            <headers>
+                                <header>
+                                    <name>Accept</name>
+                                    <value>application/json</value>
+                                </header>
+                            </headers>
+                            <tags>
+                                <tag>
+                                    <tag>fan</tag>
+                                    <value>data</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>5df2fc0186384bf7ad8846fc9e54fe89</uuid>
+                            <name>Fan {#FAN.ID} Reading</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.fan.reading[{#FAN.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <units>rpm</units>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Fans[{#FAN.ID}].Reading || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.fan.raw[{#FAN.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>fan</tag>
+                                    <value>reading</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>4c8725607ec14f5fac17e0ad7d93e95e</uuid>
+                            <name>Fan {#FAN.ID} State</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.fan.state[{#FAN.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Fans[{#FAN.ID}].Status.State || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.fan.raw[{#FAN.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>fan</tag>
+                                    <value>state</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <master_item>
+                        <key>redfish.fan.collection.raw</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <parameters>
+                                <parameter>try {
+    var data = JSON.parse(value);
+    
+    if (data.body) {
+        data = data.body;
+    }
+    
+    var result = [];
+    if (!data.Links.CooledBy || !Array.isArray(data.Links.CooledBy)) {
+        throw new Error('Members array not found');
+    }
+    
+    data.Links.CooledBy.forEach(function(member, index) {
+        if (!member['@odata.id']) {
+            return;
+        }
+        
+        var url = member['@odata.id'];
+        
+        if (!url) return;
+        
+        url = url.replace(/\/$/, '');
+        var urlParts = url.split('/').filter(function(part) {
+            return part !== '';
+        });
+        
+        var fanId = urlParts[urlParts.length - 1];
+        
+        result.push({
+            &quot;{#FAN.URL}&quot;: url,
+            &quot;{#FAN.ID}&quot;: fanId,
+            &quot;{#FAN.NAME}&quot;: &quot;Fan &quot; + fanId
+        });
+    });
+    
+    return JSON.stringify(result);
+    
+} catch (e) {
+    return JSON.stringify([]);
+}</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                </discovery_rule>
+                <discovery_rule>
+                    <uuid>9e87915b9a5b47d08eb838d20e068a27</uuid>
+                    <name>Redfish Memory Discovery</name>
+                    <type>DEPENDENT</type>
+                    <key>redfish.memory.discovery</key>
+                    <delay>0</delay>
+                    <status>DISABLED</status>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>b4e6e32f9c734028aa220609125cb2c6</uuid>
+                            <name>Memory Slot {#MEMORY.ID}: Frequency</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.memory.frequency[{#MEMORY.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
+return data.AllowedSpeedsMHz || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.memory.raw[{#MEMORY.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>memory</tag>
+                                    <value>frequency</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>3b6b08f642554e628535b9d30b095d9a</uuid>
+                            <name>Memory Slot {#MEMORY.ID}: Health</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.memory.health[{#MEMORY.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
+return data.Status.Health || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.memory.raw[{#MEMORY.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>memory</tag>
+                                    <value>health</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>71dea5c890124821af91c2f1327cac73</uuid>
+                                    <expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])&lt;&gt;&quot;OK&quot; and last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])&lt;&gt;&quot;&quot;</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])=&quot;OK&quot; and last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.memory.health[{#MEMORY.ID}])=&quot;&quot;</recovery_expression>
+                                    <name>Memory module in Slot {#MEMORY.ID} is not OK</name>
+                                    <priority>HIGH</priority>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>memory</tag>
+                                            <value>health</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>50282315fb4c40d0aa365517600ca5e4</uuid>
+                            <name>Memory Slot {#MEMORY.ID}: Location</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.memory.location[{#MEMORY.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
+return data.MemoryLocation.Slot || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.memory.raw[{#MEMORY.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>memory</tag>
+                                    <value>location</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>aa2389428d5b4354a15c19b3d3b1164f</uuid>
+                            <name>Memory Slot {#MEMORY.ID}: Manufacturer</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.memory.manufacturer[{#MEMORY.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
+return data.Manufacturer || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.memory.raw[{#MEMORY.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>memory</tag>
+                                    <value>manufacturer</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>471050407875436ea55ab8985687e727</uuid>
+                            <name>Memory Slot {#MEMORY.ID}: MemoryMedia</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.memory.memorymedia[{#MEMORY.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
+return data.MemoryMedia || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.memory.raw[{#MEMORY.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>memory</tag>
+                                    <value>memorymedia</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>a85ee0309ad74a91a1eb9d2a2a5557b5</uuid>
+                            <name>Memory Slot {#MEMORY.ID}: Name</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.memory.name[{#MEMORY.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
+return data.Name || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.memory.raw[{#MEMORY.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>memory</tag>
+                                    <value>name</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>52c6a44d14c2466daca0eb5132c613ef</uuid>
+                            <name>Memory Slot {#MEMORY.ID}: PartNumber</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.memory.partnumber[{#MEMORY.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
+return data.PartNumber || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.memory.raw[{#MEMORY.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>memory</tag>
+                                    <value>partnumber</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>5abbac6d7f4141389efee031e72aaed1</uuid>
+                            <name>Memory {#MEMORY.ID} Raw Data</name>
+                            <type>HTTP_AGENT</type>
+                            <key>redfish.memory.raw[{#MEMORY.ID}]</key>
+                            <delay>5m</delay>
+                            <history>1d</history>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <authtype>BASIC</authtype>
+                            <username>{$API_USER}</username>
+                            <password>{$API_PASSWORD}</password>
+                            <timeout>30s</timeout>
+                            <url>https://{HOST.CONN}{#MEMORY.URL}</url>
+                            <headers>
+                                <header>
+                                    <name>Accept</name>
+                                    <value>application/json</value>
+                                </header>
+                            </headers>
+                            <output_format>JSON</output_format>
+                            <tags>
+                                <tag>
+                                    <tag>memory</tag>
+                                    <value>data</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>a3f16ac750314b5d8467d82277e79022</uuid>
+                            <name>Memory Slot {#MEMORY.ID}: SerialNumber</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.memory.serialnumber[{#MEMORY.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
+return data.SerialNumber || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.memory.raw[{#MEMORY.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>memory</tag>
+                                    <value>serialnumber</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>af349f19377d4ee388159eeb3aa3d5ad</uuid>
+                            <name>Memory Slot {#MEMORY.ID}: Size</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.memory.size[{#MEMORY.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <units>B</units>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
+return data.CapacityMiB || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.memory.raw[{#MEMORY.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>memory</tag>
+                                    <value>size</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>f46623f283cf442680f0ffd042ced1ad</uuid>
+                            <name>Memory Slot {#MEMORY.ID}: State</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.memory.state[{#MEMORY.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;Absent&quot;;
+}
+
+return data.Status.State || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.memory.raw[{#MEMORY.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>memory</tag>
+                                    <value>state</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>cfd2820b19a647bb9dadc5588a4f4b2a</uuid>
+                                    <expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.memory.state[{#MEMORY.ID}])=&quot;Disabled&quot;</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.memory.state[{#MEMORY.ID}])=&quot;Disabled&quot; and last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.memory.state[{#MEMORY.ID}])=&quot;Absent&quot;</recovery_expression>
+                                    <name>Memory State {#MEMORY.ID} is Disabled</name>
+                                    <status>DISABLED</status>
+                                    <discover>NO_DISCOVER</discover>
+                                    <priority>HIGH</priority>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>memory</tag>
+                                            <value>disabled</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>25e4403bef5848139c0c766204ae8880</uuid>
+                            <name>Memory Slot {#MEMORY.ID}: Type</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.memory.type[{#MEMORY.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+if (data.Status &amp;&amp; data.Status.State === &quot;Absent&quot;) {
+    return &quot;&quot;;
+}
+
+return data.MemoryDeviceType || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.memory.raw[{#MEMORY.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>memory</tag>
+                                    <value>type</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <master_item>
+                        <key>redfish.memory.collection.raw</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <parameters>
+                                <parameter>try {
+    var data = JSON.parse(value);
+    
+    if (data.body) {
+        data = data.body;
+    }
+    
+    var result = [];
+    if (!data.Members || !Array.isArray(data.Members)) {
+        throw new Error('Members array not found');
+    }
+    
+    data.Members.forEach(function(member, index) {
+        if (!member['@odata.id']) {
+            return;
+        }
+        
+        var url = member['@odata.id'];
+        
+        if (!url) return;
+
+        url = url.replace(/\/$/, '');
+        var urlParts = url.split('/').filter(function(part) {
+            return part !== '';
+        });
+        
+        var memoryId = urlParts[urlParts.length - 1];
+        
+        result.push({
+            &quot;{#MEMORY.URL}&quot;: url,
+            &quot;{#MEMORY.ID}&quot;: memoryId,
+            &quot;{#MEMORY.NAME}&quot;: &quot;Memory Slot &quot; + memoryId
+        });
+    });
+    
+    return JSON.stringify(result);
+    
+} catch (e) {
+    return JSON.stringify([]);
+}</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                </discovery_rule>
+                <discovery_rule>
+                    <uuid>26f053d25d5f4ecababb804b222660a3</uuid>
+                    <name>Redfish PCIe Discovery</name>
+                    <type>DEPENDENT</type>
+                    <key>redfish.pcie.discovery</key>
+                    <delay>0</delay>
+                    <status>DISABLED</status>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>f6f5e566a6734d4f8d64e9f02ffc8063</uuid>
+                            <name>PCIe {#PCIE.ID} Device Class</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.pcie.deviceclass[{#PCIE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.DeviceClass || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.pcie.raw[{#PCIE.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>pcie</tag>
+                                    <value>deviceclass</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>73afe277fa044c80bf31d9ab15472e5a</uuid>
+                            <name>PCIe {#PCIE.ID} Name</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.pcie.name[{#PCIE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Name || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.pcie.raw[{#PCIE.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>pcie</tag>
+                                    <value>name</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>7732f4953c134e3f827613d1de6593c7</uuid>
+                            <name>PCIe {#PCIE.ID} Raw Data</name>
+                            <type>HTTP_AGENT</type>
+                            <key>redfish.pcie.raw[{#PCIE.ID}]</key>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <authtype>BASIC</authtype>
+                            <username>{$API_USER}</username>
+                            <password>{$API_PASSWORD}</password>
+                            <url>https://{HOST.CONN}{#PCIE.URL}</url>
+                            <headers>
+                                <header>
+                                    <name>Accept</name>
+                                    <value>application/json</value>
+                                </header>
+                            </headers>
+                            <tags>
+                                <tag>
+                                    <tag>pcie</tag>
+                                    <value>data</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>acdf197134884c659143206ccfb8f331</uuid>
+                            <name>PCIe {#PCIE.ID} Slot ID</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.pcie.slotid[{#PCIE.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Id || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.pcie.raw[{#PCIE.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>pcie</tag>
+                                    <value>slot</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <master_item>
+                        <key>redfish.pcie.collection.raw</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <parameters>
+                                <parameter>try {
+    var data = JSON.parse(value);
+    
+    if (data.body) {
+        data = data.body;
+    }
+    
+    var result = [];
+    if (!data.PCIeFunctions || !Array.isArray(data.PCIeFunctions)) {
+        throw new Error('Members array not found');
+    }
+    
+    data.PCIeFunctions.forEach(function(member, index) {
+        if (!member['@odata.id']) {
+            return;
+        }
+        
+        var url = member['@odata.id'];
+        
+        if (!url) return;
+        
+        url = url.replace(/\/$/, '');
+        var urlParts = url.split('/').filter(function(part) {
+            return part !== '';
+        });
+
+        var pcieId = String(index + 1);
+
+        result.push({
+            &quot;{#PCIE.URL}&quot;: url,
+            &quot;{#PCIE.ID}&quot;: pcieId,
+            &quot;{#PCIE.NAME}&quot;: &quot;PCIe Slot &quot; + pcieId
+        });
+    });
+    
+    return JSON.stringify(result);
+    
+} catch (e) {
+    return JSON.stringify([]);
+}</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                </discovery_rule>
+                <discovery_rule>
+                    <uuid>6ed62bdd2275477bb41c9227dc2a243d</uuid>
+                    <name>Redfish Power Discovery</name>
+                    <type>DEPENDENT</type>
+                    <key>redfish.power.discovery</key>
+                    <delay>0</delay>
+                    <status>DISABLED</status>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>b06531bb81854ddd81719bf696a98180</uuid>
+                            <name>Power {#POWER.ID} CPU Consumed Watts</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.power.cpuconsumedwatts[{#POWER.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <units>W</units>
+                            <description>Потребление CPU</description>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PowerControl[1].PowerConsumedWatts || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.power.raw[{#POWER.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>power</tag>
+                                    <value>cpu</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>8a9664003cea4c08998979d896630b64</uuid>
+                            <name>Power {#POWER.ID} Efficiency Percent</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.power.efficiencypercent[{#POWER.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <units>%</units>
+                            <description>КПД</description>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PowerSupplies[{#POWER.ID}].EfficiencyPercent || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.power.raw[{#POWER.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>power</tag>
+                                    <value>efficiencypercent</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>d7b2054d8b2141b489a4cb0ae512d171</uuid>
+                                    <expression>min(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.power.efficiencypercent[{#POWER.NAME}],3m)&gt;=98</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>min(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.power.efficiencypercent[{#POWER.NAME}],3m)&lt;98</recovery_expression>
+                                    <name>{#POWER.NAME}: Efficiency Percent is HIGH</name>
+                                    <priority>HIGH</priority>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>power</tag>
+                                            <value>efficiencypercent</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>f138bded7f2f4ce9adfde28ffc5a2a75</uuid>
+                            <name>Power {#POWER.ID} Fru Part Number</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.power.frupartnumber[{#POWER.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <description>Код запасной части для замены в сервисе</description>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PowerSupplies[{#POWER.ID}].Oem.Lenovo.FruPartNumber || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.power.raw[{#POWER.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>power</tag>
+                                    <value>frupartnumber</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>f7af272049c04946b6941f9760ec249c</uuid>
+                            <name>Power {#POWER.ID} Health</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.power.health[{#POWER.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <description>Состояние контроллера питания</description>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PowerControl[{#POWER.ID}].Status.Health || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.power.raw[{#POWER.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>power</tag>
+                                    <value>health</value>
+                                </tag>
+                            </tags>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>1e61f95b557f4887be5899cf058bf00c</uuid>
+                                    <expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.power.health[{#POWER.NAME}])&lt;&gt;&quot;OK&quot;</expression>
+                                    <recovery_mode>RECOVERY_EXPRESSION</recovery_mode>
+                                    <recovery_expression>last(/Lenovo-DM7000F-API-Zabbix7.0-Template/redfish.power.health[{#POWER.NAME}])=&quot;OK&quot;</recovery_expression>
+                                    <name>{#POWER.NAME}: Power unit is Critical</name>
+                                    <priority>DISASTER</priority>
+                                    <manual_close>YES</manual_close>
+                                    <tags>
+                                        <tag>
+                                            <tag>power</tag>
+                                            <value>health</value>
+                                        </tag>
+                                    </tags>
+                                </trigger_prototype>
+                            </trigger_prototypes>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>156c8c8993444a0db4b86c8f55360c21</uuid>
+                            <name>Power {#POWER.ID} Line Input Voltage</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.power.lineinputvoltage[{#POWER.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <units>V</units>
+                            <description>Входное напряжение</description>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PowerSupplies[{#POWER.ID}].LineInputVoltage || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.power.raw[{#POWER.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>power</tag>
+                                    <value>lineinputvoltage</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>8c9655453b934cd9b795b6e0d0778850</uuid>
+                            <name>Power {#POWER.ID} Location</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.power.location[{#POWER.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PowerSupplies[{#POWER.ID}].Oem.Lenovo.Location.Info || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.power.raw[{#POWER.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>power</tag>
+                                    <value>location</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>2b453b10394b4644912a747d4b450009</uuid>
+                            <name>Power {#POWER.ID} Manufacturer</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.power.manufacturer[{#POWER.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PowerSupplies[{#POWER.ID}].Manufacturer || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.power.raw[{#POWER.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>power</tag>
+                                    <value>manufacturer</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>be4f48c6501e4ebbafd9014a0c9d898e</uuid>
+                            <name>Power {#POWER.ID} Memory Consumed Watts</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.power.memoryconsumedwatts[{#POWER.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <units>W</units>
+                            <description>Потребление Memory</description>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PowerControl[2].PowerConsumedWatts || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.power.raw[{#POWER.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>power</tag>
+                                    <value>memory</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>2f6d15d93bec4f3fbbfd1f9b28611c7e</uuid>
+                            <name>Power {#POWER.ID} Model</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.power.model[{#POWER.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PowerSupplies[{#POWER.ID}].Model || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.power.raw[{#POWER.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>power</tag>
+                                    <value>model</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>bf6831a4981647bfbd4da4260717ae00</uuid>
+                            <name>Power {#POWER.ID} Part Number</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.power.partnumber[{#POWER.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <description>Заводской код детали, используемый в сборке</description>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PowerSupplies[{#POWER.ID}].PartNumber || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.power.raw[{#POWER.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>power</tag>
+                                    <value>partnumber</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>69496758447743fd8e0fcc1dc8ddf928</uuid>
+                            <name>Power {#POWER.ID} Power Capacity Watts</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.power.powercapacitywatts[{#POWER.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>FLOAT</value_type>
+                            <units>W</units>
+                            <description>Максимальная мощность блока питания</description>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PowerSupplies[{#POWER.ID}].PowerCapacityWatts || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.power.raw[{#POWER.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>power</tag>
+                                    <value>powercapacitywatts</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>dba4ea2ac1d94ddea2dbf3cfeab1aefc</uuid>
+                            <name>Power {#POWER.ID} Power Consumed Watts</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.power.powerconsumedwatts[{#POWER.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <description>Текущая потребляемая мощность</description>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PowerControl[{#POWER.ID}].PowerConsumedWatts || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.power.raw[{#POWER.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>power</tag>
+                                    <value>powerconsumedwatts</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>06130a8c69c34602bc419b5205355be1</uuid>
+                            <name>Power {#POWER.ID} Raw Data</name>
+                            <type>HTTP_AGENT</type>
+                            <key>redfish.power.raw[{#POWER.ID}]</key>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <authtype>BASIC</authtype>
+                            <username>{$API_USER}</username>
+                            <password>{$API_PASSWORD}</password>
+                            <url>https://{HOST.CONN}{#POWER.URL}</url>
+                            <headers>
+                                <header>
+                                    <name>Accept</name>
+                                    <value>application/json</value>
+                                </header>
+                            </headers>
+                            <output_format>JSON</output_format>
+                            <tags>
+                                <tag>
+                                    <tag>power</tag>
+                                    <value>data</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>33d141d08e344721ae035801ec0c4769</uuid>
+                            <name>Power {#POWER.ID} Serial Number</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.power.serialnumber[{#POWER.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PowerSupplies[{#POWER.ID}].SerialNumber || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.power.raw[{#POWER.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>power</tag>
+                                    <value>serialnumber</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>78e549f8adc1491f8d4c4ad2ad230a4a</uuid>
+                            <name>Power {#POWER.ID} State</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.power.state[{#POWER.NAME}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <description>Состояние контроллера питания</description>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.PowerControl[{#POWER.ID}].Status.State || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.power.raw[{#POWER.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>power</tag>
+                                    <value>state</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <master_item>
+                        <key>redfish.power.collection.raw</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <parameters>
+                                <parameter>try {
+    var data = JSON.parse(value);
+    
+    if (data.body) {
+        data = data.body;
+    }
+    
+    var result = [];
+    if (!data.Links.PoweredBy || !Array.isArray(data.Links.PoweredBy)) {
+        throw new Error('Members array not found');
+    }
+    
+    data.Links.PoweredBy.forEach(function(member, index) {
+        if (!member['@odata.id']) {
+            return;
+        }
+        
+        var url = member['@odata.id'];
+        
+        if (!url) return;
+        
+        url = url.replace(/\/$/, '');
+        var urlParts = url.split('/').filter(function(part) {
+            return part !== '';
+        });
+
+        var powerId = urlParts[urlParts.length - 1];
+        var BPpowerId = Number(powerId) + 1;
+
+        result.push({
+            &quot;{#POWER.URL}&quot;: url,
+            &quot;{#POWER.ID}&quot;: powerId,
+            &quot;{#POWER.BP.ID}&quot;: BPpowerId,
+            &quot;{#POWER.NAME}&quot;: &quot;Power unit &quot; + powerId
+        });
+    });
+    
+    return JSON.stringify(result);
+    
+} catch (e) {
+    return JSON.stringify([]);
+}</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                </discovery_rule>
+                <discovery_rule>
+                    <uuid>702aab0f1459430fb562ba5c635efe4d</uuid>
+                    <name>Redfish Processor Collection Discovery</name>
+                    <type>DEPENDENT</type>
+                    <key>redfish.procs.discovery</key>
+                    <delay>0</delay>
+                    <status>DISABLED</status>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>879fec9c6db04839bf41acf73e1494b3</uuid>
+                            <name>Processor {#PROCESSOR.ID} Architecture</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.proc.architecture[{#PROCESSOR.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.ProcessorArchitecture || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.processor.raw[{#PROCESSOR.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>processor</tag>
+                                    <value>architecture</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>16abb4290c414f7ba703b8e94c784de7</uuid>
+                            <name>Processor {#PROCESSOR.ID} Manufacturer</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.proc.manufacturer[{#PROCESSOR.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Manufacturer || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.processor.raw[{#PROCESSOR.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>processor</tag>
+                                    <value>manufacturer</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>b2c19daa0b084ebba2d15290a9aecb90</uuid>
+                            <name>Processor {#PROCESSOR.ID} MaxSpeedMHz</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.proc.maxspeed[{#PROCESSOR.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.MaxSpeedMHz || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.processor.raw[{#PROCESSOR.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>processor</tag>
+                                    <value>maxspeedmhz</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>4f62b4d2a9bb4f9e98dedbb8a7775497</uuid>
+                            <name>Processor {#PROCESSOR.ID} Model</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.proc.model[{#PROCESSOR.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Model || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.processor.raw[{#PROCESSOR.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>processor</tag>
+                                    <value>model</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>d816c82e9ec244e4992265e526c47fd3</uuid>
+                            <name>Processor {#PROCESSOR.ID} Socket</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.proc.socket[{#PROCESSOR.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Socket || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.processor.raw[{#PROCESSOR.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>processor</tag>
+                                    <value>socket</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>661a29e71f224ffc8c0ea4d406854d7d</uuid>
+                            <name>Processor {#PROCESSOR.ID} TotalCores</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.proc.totalcores[{#PROCESSOR.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.TotalCores || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.processor.raw[{#PROCESSOR.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>processor</tag>
+                                    <value>cores</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>c955924f6abf4315b727ca5bb90de048</uuid>
+                            <name>Processor {#PROCESSOR.ID} TotalThreads</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.proc.totalthreads[{#PROCESSOR.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.TotalThreads || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.processor.raw[{#PROCESSOR.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>processor</tag>
+                                    <value>threads</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>e457a64b3ee54a618cd7195c5ac37900</uuid>
+                            <name>Processor {#PROCESSOR.ID} Version</name>
+                            <type>DEPENDENT</type>
+                            <key>redfish.proc.version[{#PROCESSOR.ID}]</key>
+                            <delay>0</delay>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>JAVASCRIPT</type>
+                                    <parameters>
+                                        <parameter>var data = JSON.parse(value);
+
+if (data.body) {
+    data = data.body;
+}
+
+return data.Version || &quot;Unknown&quot;;</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                            <master_item>
+                                <key>redfish.processor.raw[{#PROCESSOR.ID}]</key>
+                            </master_item>
+                            <tags>
+                                <tag>
+                                    <tag>processor</tag>
+                                    <value>version</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>4b1f38931ca344e9adf0bb23ba61980d</uuid>
+                            <name>Processor {#PROCESSOR.ID} Raw Data</name>
+                            <type>HTTP_AGENT</type>
+                            <key>redfish.processor.raw[{#PROCESSOR.ID}]</key>
+                            <trends>0</trends>
+                            <status>DISABLED</status>
+                            <discover>NO_DISCOVER</discover>
+                            <value_type>TEXT</value_type>
+                            <authtype>BASIC</authtype>
+                            <username>{$API_USER}</username>
+                            <password>{$API_PASSWORD}</password>
+                            <url>https://{HOST.CONN}{#PROCESSOR.URL}</url>
+                            <headers>
+                                <header>
+                                    <name>Accept</name>
+                                    <value>application/json</value>
+                                </header>
+                            </headers>
+                            <output_format>JSON</output_format>
+                            <tags>
+                                <tag>
+                                    <tag>processor</tag>
+                                    <value>data</value>
+                                </tag>
+                            </tags>
+                        </item_prototype>
+                    </item_prototypes>
+                    <master_item>
+                        <key>redfish.proc.collection.raw</key>
+                    </master_item>
+                    <preprocessing>
+                        <step>
+                            <type>JAVASCRIPT</type>
+                            <parameters>
+                                <parameter>try {
+    var data = JSON.parse(value);
+    
+    if (data.body) {
+        data = data.body;
+    }
+    
+    var result = [];
+    if (!data.Members || !Array.isArray(data.Members)) {
+        throw new Error('Members array not found');
+    }
+    
+    data.Members.forEach(function(member, index) {
+        if (!member['@odata.id']) {
+            return;
+        }
+        
+        var url = member['@odata.id'];
+        
+        if (!url) return;
+
+        url = url.replace(/\/$/, '');
+        var urlParts = url.split('/').filter(function(part) {
+            return part !== '';
+        });
+        
+        var procId = urlParts[urlParts.length - 1];
+        
+        result.push({
+            &quot;{#PROCESSOR.URL}&quot;: url,
+            &quot;{#PROCESSOR.ID}&quot;: procId,
+            &quot;{#PROCESSOR.NAME}&quot;: &quot;Processor Number&quot; + procId
+        });
+    });
+    
+    return JSON.stringify(result);
+    
+} catch (e) {
+    return JSON.stringify([]);
+}</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                </discovery_rule>
+            </discovery_rules>
+            <macros>
+                <macro>
+                    <macro>{$API_PASSWORD}</macro>
+                    <value>password</value>
+                </macro>
+                <macro>
+                    <macro>{$API_USER}</macro>
+                    <value>username</value>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+</zabbix_export>
